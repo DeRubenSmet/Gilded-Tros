@@ -25,6 +25,7 @@ export class GildedTros {
         break;
       case "B-DAWG Keychain":
         // Legendary item, does not change
+        break;
       default:
         this.updateRegularItem(item);
         break;
@@ -61,7 +62,7 @@ export class GildedTros {
     const qualityDecrease = SMELLY_ITEMS.includes(item.name) ? 2 : 1;
     //If sellIn < 0, decrease quality, but for "Smelly Items" decrease quality twice as fast
     if (item.sellIn <= 0) {
-      item.quality = item.quality - qualityDecrease * 2;
+      item.quality = Math.max(MIN_QUALITY, item.quality - qualityDecrease * 2);
       item.sellIn--;
     } else {
       item.quality = Math.max(MIN_QUALITY, item.quality - qualityDecrease);
