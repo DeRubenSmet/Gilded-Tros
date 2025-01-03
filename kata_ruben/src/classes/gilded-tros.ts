@@ -8,6 +8,14 @@ const MIN_QUALITY = 0;
 export class GildedTros {
   constructor(public items: Array<Item>) {}
 
+
+  private updateGoodWine(item: Item): void {                                    //Method to update "Good Wine"
+    item.quality = Math.min(MAX_QUALITY, item.quality + 1);
+    item.sellIn--;
+}
+
+
+
   public updateQuality(): void {
     for (let i = 0; i < this.items.length; i++) {
       if (
