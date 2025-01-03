@@ -24,7 +24,7 @@ export class GildedTros {
         this.updateBackstagePass(item);
         break;
       case "B-DAWG Keychain":
-        // Legendary item, does not change
+        this.updateLegendaryItem(item);
         break;
       default:
         this.updateRegularItem(item);
@@ -38,8 +38,14 @@ export class GildedTros {
     item.sellIn--;
   }
 
+  private updateLegendaryItem(item: Item): void {
+    //Method to update "Legendary Item"
+    // Legendary item, does not change and never has to be sold
+    item.sellIn = 0;
+  }
+
   private updateBackstagePass(item: Item): void {
-    //Method to update "Backstage passes"
+    //Method to update "Backstage Passes"
     switch (true) {
       case item.sellIn > 10:
         item.quality = Math.min(MAX_QUALITY, item.quality + 1);
