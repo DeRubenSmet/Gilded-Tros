@@ -14,10 +14,29 @@ export class GildedTros {
     item.sellIn--;
   }
 
+  private updateBackstagePass(item: Item): void {
+    //Method to update "Backstage passes"
+    switch (true) {
+      case item.sellIn > 10:
+        item.quality = Math.min(MAX_QUALITY, item.quality + 1);
+        break;
+      case item.sellIn > 5:
+        item.quality = Math.min(MAX_QUALITY, item.quality + 2);
+        break;
+      case item.sellIn > 0:
+        item.quality = Math.min(MAX_QUALITY, item.quality + 3);
+        break;
+      default:
+        item.quality = MIN_QUALITY; // Expired
+        break;
+    }
+    item.sellIn--;
+  }
+
   private updateRegularItem(item: Item): void {
     //Method to update "Smelly Items" & "Regular Items"
     const qualityDecrease = SMELLY_ITEMS.includes(item.name) ? 2 : 1;
-    // If sellIn < 0, decrease quality, but for "Smelly Items" decrease quality twice as fast
+    //If sellIn < 0, decrease quality, but for "Smelly Items" decrease quality twice as fast
     if (item.sellIn <= 0) {
       item.quality = item.quality - qualityDecrease * 2;
       item.sellIn--;
