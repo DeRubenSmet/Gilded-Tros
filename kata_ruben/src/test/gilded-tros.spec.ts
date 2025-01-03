@@ -28,4 +28,16 @@ describe("GildedTrosTest", () => {
       expect(goodWine.quality).toBe(initialQuality + 2); // Increased again after sellIn < 0
     }
   });
+
+  test("should not change quality of Legendary item", () => {
+    const legendaryItem = items.find((item) => item.name === "B-DAWG Keychain");
+    if (legendaryItem) {
+      const initialQuality = legendaryItem.quality;
+      const initialSellIn = legendaryItem.sellIn;
+      app.updateQuality();
+
+      expect(legendaryItem.quality).toBe(initialQuality); // Legendary item should not change
+      expect(legendaryItem.sellIn).toBe(initialSellIn); // SellIn should stay the same
+    }
+  });
 });
