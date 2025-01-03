@@ -19,13 +19,13 @@ describe("GildedTrosTest", () => {
       const initialSellIn = goodWine.sellIn;
       app.updateQuality();
 
-      expect(goodWine.quality).toBe(initialQuality + 1); // Increased by 1
-      expect(goodWine.sellIn).toBe(initialSellIn - 1);
+      expect(goodWine.quality).toEqual(initialQuality + 1); //Quality increased by 1
+      expect(goodWine.sellIn).toEqual(initialSellIn - 1);
 
-      goodWine.sellIn = -1;
-      app.updateQuality(); // SellIn goes below 0
+      goodWine.sellIn = -1; //SellIn goes below 0
+      app.updateQuality();
 
-      expect(goodWine.quality).toBe(initialQuality + 2); // Increased again after sellIn < 0
+      expect(goodWine.quality).toEqual(initialQuality + 2); //Quality increased again after sellIn < 0
     }
   });
 
@@ -36,8 +36,45 @@ describe("GildedTrosTest", () => {
       const initialSellIn = legendaryItem.sellIn;
       app.updateQuality();
 
-      expect(legendaryItem.quality).toBe(initialQuality); // Legendary item should not change
-      expect(legendaryItem.sellIn).toBe(initialSellIn); // SellIn should stay the same
+      expect(legendaryItem.quality).toEqual(initialQuality); //Legendary item should not change
+      expect(legendaryItem.sellIn).toEqual(initialSellIn); //SellIn should stay the same
+    }
+  });
+
+  test("should update quality for Backstage passes correctly", () => {
+    const backstagePass = items.find(
+      (item) => item.name === "Backstage passes for Re:Factor"
+    );
+    if (backstagePass) {
+      const initialQuality = backstagePass.quality;
+      const initialSellIn = backstagePass.sellIn;
+
+      app.updateQuality();
+
+      //Quality should increase by 1 because sellIn > 10
+      expect(backstagePass.quality).toEqual(initialQuality + 1);
+      expect(backstagePass.sellIn).toEqual(initialSellIn - 1);
+
+      backstagePass.sellIn = 9; //SellIn goes below 10
+      app.updateQuality();
+
+      //Quality should increase by 1 because sellIn > 5
+      expect(backstagePass.quality).toEqual(initialQuality + 3);
+      expect(backstagePass.sellIn).toEqual(8);
+
+      backstagePass.sellIn = 4; //SellIn goes below 5
+      app.updateQuality();
+
+      //Quality should increase by 1 because sellIn < 5
+      expect(backstagePass.quality).toEqual(initialQuality + 6);
+      expect(backstagePass.sellIn).toEqual(3);
+
+      //Simulate the passes expiring
+      backstagePass.sellIn = 0;
+      app.updateQuality();
+
+      //Quality should be 0 after expiry
+      expect(backstagePass.quality).toEqual(0);
     }
   });
 });
