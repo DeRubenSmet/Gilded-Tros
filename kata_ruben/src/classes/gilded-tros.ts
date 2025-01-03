@@ -1,6 +1,6 @@
 import { Item } from "./item";
 
-const SMELLY_ITEMS = ["Duplicate Code", "Long Methods", "Ugly Variable Names"];
+export const SMELLY_ITEMS = ["Duplicate Code", "Long Methods", "Ugly Variable Names"];
 
 export const MAX_QUALITY = 50;
 export const MIN_QUALITY = 0;

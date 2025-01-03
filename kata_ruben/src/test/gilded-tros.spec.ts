@@ -1,5 +1,5 @@
 import { Item } from "../classes/item";
-import { GildedTros, MAX_QUALITY, MIN_QUALITY } from "../classes/gilded-tros";
+import { GildedTros, MAX_QUALITY, MIN_QUALITY, SMELLY_ITEMS } from "../classes/gilded-tros";
 import { initialItems } from "../App";
 
 describe("GildedTrosTest", () => {
@@ -111,7 +111,7 @@ describe("GildedTrosTest", () => {
     //Create copy of items
     const smellyItems = items
       .filter((item) =>
-        ["Duplicate Code", "Long Methods", "Ugly Variable Names"].includes(
+        SMELLY_ITEMS.includes(
           item.name
         )
       )
@@ -134,7 +134,7 @@ describe("GildedTrosTest", () => {
       smellyItem.sellIn = -1; //SellIn goes below 0
 
       appCopy.updateQuality();
-      
+
       //Smelly items degrade twice as fast after expiry (quality -4)
       expect(smellyItem.quality).toBe(
         Math.max(MIN_QUALITY, initialQuality - 6)
