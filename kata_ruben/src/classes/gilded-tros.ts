@@ -2,8 +2,8 @@ import { Item } from "./item";
 
 const SMELLY_ITEMS = ["Duplicate Code", "Long Methods", "Ugly Variable Names"];
 
-const MAX_QUALITY = 50;
-const MIN_QUALITY = 0;
+export const MAX_QUALITY = 50;
+export const MIN_QUALITY = 0;
 
 export class GildedTros {
   constructor(public items: Array<Item>) {}
