@@ -8,13 +8,24 @@ const MIN_QUALITY = 0;
 export class GildedTros {
   constructor(public items: Array<Item>) {}
 
-
-  private updateGoodWine(item: Item): void {                                    //Method to update "Good Wine"
+  private updateGoodWine(item: Item): void {
+    //Method to update "Good Wine"
     item.quality = Math.min(MAX_QUALITY, item.quality + 1);
     item.sellIn--;
-}
+  }
 
-
+  private updateRegularItem(item: Item): void {
+    //Method to update "Smelly Items" & "Regular Items"
+    const qualityDecrease = SMELLY_ITEMS.includes(item.name) ? 2 : 1;
+    // If sellIn < 0, decrease quality, but for "Smelly Items" decrease quality twice as fast
+    if (item.sellIn <= 0) {
+      item.quality = item.quality - qualityDecrease * 2;
+      item.sellIn--;
+    } else {
+      item.quality = Math.max(MIN_QUALITY, item.quality - qualityDecrease);
+      item.sellIn--;
+    }
+  }
 
   public updateQuality(): void {
     for (let i = 0; i < this.items.length; i++) {
