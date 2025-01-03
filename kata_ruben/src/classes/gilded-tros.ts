@@ -8,6 +8,29 @@ const MIN_QUALITY = 0;
 export class GildedTros {
   constructor(public items: Array<Item>) {}
 
+  public updateQuality(): void {
+    //Method to call updateItem
+    this.items.forEach((item) => this.updateItem(item));
+  }
+
+  private updateItem(item: Item): void {
+    //Method to switch between update methods
+    switch (item.name) {
+      case "Good Wine":
+        this.updateGoodWine(item);
+        break;
+      case "Backstage passes for Re:Factor":
+      case "Backstage passes for HAXX":
+        this.updateBackstagePass(item);
+        break;
+      case "B-DAWG Keychain":
+        // Legendary item, does not change
+      default:
+        this.updateRegularItem(item);
+        break;
+    }
+  }
+
   private updateGoodWine(item: Item): void {
     //Method to update "Good Wine"
     item.quality = Math.min(MAX_QUALITY, item.quality + 1);
@@ -43,66 +66,6 @@ export class GildedTros {
     } else {
       item.quality = Math.max(MIN_QUALITY, item.quality - qualityDecrease);
       item.sellIn--;
-    }
-  }
-
-  public updateQuality(): void {
-    for (let i = 0; i < this.items.length; i++) {
-      if (
-        this.items[i].name != "Good Wine" &&
-        this.items[i].name != "Backstage passes for Re:Factor" &&
-        this.items[i].name != "Backstage passes for HAXX"
-      ) {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != "B-DAWG Keychain") {
-            this.items[i].quality = this.items[i].quality - 1;
-          }
-        }
-      } else {
-        if (this.items[i].quality < 50) {
-          this.items[i].quality = this.items[i].quality + 1;
-
-          if (this.items[i].name == "Backstage passes for Re:Factor") {
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
-              }
-            }
-
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
-              }
-            }
-          }
-        }
-      }
-
-      if (this.items[i].name != "B-DAWG Keychain") {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
-      }
-
-      if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != "Good Wine") {
-          if (
-            this.items[i].name != "Backstage passes for Re:Factor" ||
-            this.items[i].name != "Backstage passes for HAXX"
-          ) {
-            if (this.items[i].quality > 0) {
-              if (this.items[i].name != "B-DAWG Keychain") {
-                this.items[i].quality = this.items[i].quality - 1;
-              }
-            }
-          } else {
-            this.items[i].quality =
-              this.items[i].quality - this.items[i].quality;
-          }
-        } else {
-          if (this.items[i].quality < 50) {
-            this.items[i].quality = this.items[i].quality + 1;
-          }
-        }
-      }
     }
   }
 }
