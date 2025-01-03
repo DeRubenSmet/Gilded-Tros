@@ -1,9 +1,14 @@
 import { Item } from "../classes/item";
 import { GildedTros } from "../classes/gilded-tros";
+import { initialItems } from "../App";
 
 describe("GildedTrosTest", () => {
-  const items: Item[] = [new Item("foo", 0, 0)];
-  const app: GildedTros = new GildedTros(items);
-  app.updateQuality();
-  expect(app.items[0].name).toEqual("fixme");
+  let items: Item[] = [];
+  let app: GildedTros;
+
+  beforeEach(() => {
+    //Make new instance of GildedTros for every test
+    items = initialItems;
+    app = new GildedTros(items);
+  });
 });
