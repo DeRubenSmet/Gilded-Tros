@@ -134,8 +134,7 @@ describe("GildedTrosTest", () => {
       smellyItem.sellIn = -1; //SellIn goes below 0
 
       appCopy.updateQuality();
-
-      //Smelly items zouden nu met 4 meer moeten degraderen (2 voor reguliere afname en 2 extra voor verval)
+      
       //Smelly items degrade twice as fast after expiry (quality -4)
       expect(smellyItem.quality).toBe(
         Math.max(MIN_QUALITY, initialQuality - 6)
